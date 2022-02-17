@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+
+	<head>
+		<title>Home</title>
+		<link href="{{ url_for('static',filename='css/bootstrap.css')}}" rel='stylesheet' type='text/css' />
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="{{ url_for('static',filename='js/jquery.min.js')}}"></script>
+		
+		 <!-- Custom Theme files -->
+		<link href="{{ url_for('static',filename='css/style.css')}}" rel='stylesheet' type='text/css' />
+   		 <!-- Custom Theme files -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		</script>
+		<!----start-top-nav-script---->
+		<script>
+			$(function() {
+				var pull 		= $('#pull');
+					menu 		= $('nav ul');
+					menuHeight	= menu.height();
+				$(pull).on('click', function(e) {
+					e.preventDefault();
+					menu.slideToggle();
+				});
+				$(window).resize(function(){
+	        		var w = $(window).width();
+	        		if(w > 320 && menu.is(':hidden')) {
+	        			menu.removeAttr('style');
+	        		}
+	    		});
+			});
+		</script>
+		<!----//End-top-nav-script---->
+	</head>
+	<body>
+		<!----- start-header---->
+			<div id="home" class="header">
+					<div class="top-header" id="move-top">
+						<div class="container">
+						<div class="logo">
+							<a href="https://www.baidu.com"><img src="{{ url_for('static', filename='images/logo.png')}}" title="Maguwohost" /></a>
+						</div> 
+						<!----start-top-nav---->
+						 <nav class="top-nav">
+							<ul class="top-nav">
+								<li class="active"><a href="index.html">Home </a></li>
+								<!-- jQuery (necessary for Bootstrap's JavaScript plugins) <li><a href="about.html">About</a></li>
+								<li><a href="pricing.html">Pricing</a></li>
+								<li><a href="domain.html"> Domain</a></li>
+								<li><a href="hosting.html">Hosting</a></li>-->
+							</ul>
+							<a href="#" id="pull"><img src="{{ url_for('static',filename='images/nav-icon.png')}}" title="menu" /></a>
+						</nav>
+
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+			</div>
+			<!----- //End-header---->
+			<!----- banner ------>
+			<div class="banner">
+				<div class="container">
+						<!----- domain-Serach-bar ----->
+						<div class="domain-Serach-bar">
+							<form action="/search/p" method="get" autocomplete="off">
+							<div class="domain-Serach-bar-grids">
+								<div class="domain-Serach-bar-left">
+									<input type="text" class="text" id="s" list="autos" name="q"  value="Your Query ..."  onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Your Query ...';}"/>
+									<div class="c">
+										<datalist id="autos">
+
+										</datalist>
+									</div>
+
+								</div>
+
+
+								<div class="domain-Serach-bar-right">
+									<input type="submit" value=" Get It !"/>
+								</div>
+							</div>
+								</form>
+								<div class="clearfix"> </div>
+							</div>
+						</div>
+					</div>
+						<!----- domain-Serach-bar ----->
+				</div>
+	
+			<!----- banner ------>
+	
+
+			
+	
+			<!---smoth-scrlling---->
+							<script type="text/javascript">
+									$(document).ready(function(){
+									$('a[href^="#"]').on('click',function (e) {
+									    e.preventDefault();
+									    var target = this.hash,
+									    $target = $(target);
+									    $('html, body').stop().animate({
+									        'scrollTop': $target.offset().top
+									    }, 1000, 'swing', function () {
+									        window.location.hash = target;
+									    });
+									});
+								});
+							</script>
+
+							<script type="text/javascript">
+								var item=document.getElementById("s")
+								if('oninput' in item){
+									item.addEventListener("input",getWord,false);
+									console.log(1);
+								}else{
+									item.onpropertychange = getWord;
+									console.log(2);
+								}
+
+								function getWord(){
+
+									var words=item.value;
+									$.ajax({
+										url:'/qa',
+										data:{word:words},
+										type:'POST',
+										dataType:'json',
+
+										success:function(data){
+
+
+											var listobj=document.getElementById("autos");
+											var words=data.words;
+											var text="";
+
+											for(var i=0;i<words.length;i++)
+												text+="<option value="+words[i]+"></option>";
+
+											listobj.innerHTML=text;
+											// // alert(listobj);
+											// listobj.appendChild(suffix)
+											// document.getElementById("autos").appendChild(suffix);
+											// var i=document.getElementById("s")
+											// i.list="autos"
+
+										},
+										error:function (e){
+											alert('error');
+										}
+
+									})
+
+								}
+
+							</script>
+					<!---//smoth-scrlling---->
+	
+</body>
+</html>
+
